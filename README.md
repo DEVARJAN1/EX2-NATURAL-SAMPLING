@@ -1,95 +1,147 @@
 # Natural-Sampling
-DEVARAJAN
-212223060044
-## AIM
-Write a simple Natural sampling program using Python.
+Aim :
 
-## APPARATUS REQUIRED:
-Python 3.x
+To perform Natural Sampling of a continuous-time message signal using a pulse train and reconstruct the signal using a low-pass filter.
 
-## PROGRAM
-~~~~
+Tools required :
+
+Python (Version 3.x)
+
+Numpy Library (for numerical computation)
+
+Matplotlib Library (for plotting the waveforms)
+
+Scipy Library (for signal processing, including filtering)
+
+
+Program :
+
+#Natural sampling
+
 import numpy as np
+
 import matplotlib.pyplot as plt
+
 from scipy.signal import butter, lfilter
 
-# Parameters
 fs = 1000  # Sampling frequency (samples per second)
+
 T = 1  # Duration in seconds
+
 t = np.arange(0, T, 1/fs)  # Time vector
 
-# Message Signal (sine wave message)
 fm = 5  # Frequency of message signal (Hz)
+
 message_signal = np.sin(2 * np.pi * fm * t)
 
-# Pulse Train Parameters
 pulse_rate = 50  # pulses per second
+
 pulse_train = np.zeros_like(t)
 
-# Construct Pulse Train (rectangular pulses)
-pulse_width = int(fs / pulse_rate / 2)  # Define width of each pulse
-for i in range(0, len(t), int(fs / pulse_rate)):
-    pulse_train[i:i + pulse_width] = 1
+pulse_width = int(fs / pulse_rate / 2)
 
-# Natural Sampling
+for i in range(0, len(t), int(fs / pulse_rate)):
+
+pulse_train[i:i+pulse_width] = 1
+
 nat_signal = message_signal * pulse_train
 
-# Reconstruction (Demodulation) Process
 sampled_signal = nat_signal[pulse_train == 1]
 
-# Create a time vector for the sampled points
 sample_times = t[pulse_train == 1]
 
-# Interpolation - Zero-Order Hold (just for visualization)
 reconstructed_signal = np.zeros_like(t)
+
 for i, time in enumerate(sample_times):
-    index = np.argmin(np.abs(t - time))  # Find the closest index to the sample time
-    reconstructed_signal[index] = sampled_signal[i]
 
-# Low-pass Filter (optional, smoother reconstruction)
+    index = np.argmin(np.abs(t - time))
+    
+    reconstructed_signal[index:index+pulse_width] = sampled_signal[i]
+    
+w-pass Filter (optional, smoother reconstruction)
+
 def lowpass_filter(signal, cutoff, fs, order=5):
-    nyquist = 0.5 * fs
-    normal_cutoff = cutoff / nyquist
-    b, a = butter(order, normal_cutoff, btype='low', analog=False)
-    return lfilter(b, a, signal)
 
-# Apply low-pass filter to smooth the reconstruction
-reconstructed_signal = lowpass_filter(reconstructed_signal, 10, fs)
+nyquist = 0.5 * fs
 
-# Plotting
+normal_cutoff = cutoff / nyquist
+
+b, a = butter(order, normal_cutoff, btype='low', analog=False)
+
+return lfilter(b, a, signal)
+
+reconstructed_signal = lowpass_filter(reconstructed_signal,10, fs)
+
 plt.figure(figsize=(14, 10))
 
-# Original Message Signal
 plt.subplot(4, 1, 1)
+
 plt.plot(t, message_signal, label='Original Message Signal')
+
 plt.legend()
+
 plt.grid(True)
 
-# Pulse Train
 plt.subplot(4, 1, 2)
+
 plt.plot(t, pulse_train, label='Pulse Train')
+
 plt.legend()
+
 plt.grid(True)
 
-# Natural Sampling
 plt.subplot(4, 1, 3)
+
 plt.plot(t, nat_signal, label='Natural Sampling')
+
 plt.legend()
+
 plt.grid(True)
 
-# Reconstructed Signal
 plt.subplot(4, 1, 4)
+
 plt.plot(t, reconstructed_signal, label='Reconstructed Message Signal', color='green')
+
 plt.legend()
+
 plt.grid(True)
 
 plt.tight_layout()
+
 plt.show()
-~~~~
-## PROGRAM WAVEFRONT
-![image](https://github.com/user-attachments/assets/75695e59-a5a1-4bf8-a825-12a38721674a)
 
-## RESULT
 
-thuss the simple Natural sampling program is excuted using Python.
 
+
+Output Waveform :
+
+![Screenshot 2025-03-24 132438](https://github.com/user-attachments/assets/09f2b66f-0c0f-464b-ba91-b603e95e63cc)
+
+![Screenshot 2025-03-24 132534](https://github.com/user-attachments/assets/965d9fcf-b989-4d59-94b3-68c63d1196bc)
+
+![Screenshot 2025-03-24 132623](https://github.com/user-attachments/assets/ed7d77ed-ca32-419b-9e6a-a324ec4f4c90)
+
+![Screenshot 2025-03-24 132718](https://github.com/user-attachments/assets/3c74c012-a634-4452-bd32-f4b0f2888f13)
+
+
+
+
+Results :
+
+1. Original Message Signal:
+
+A 5 Hz sine wave is generated as the input message signal.
+
+2. Pulse Train Generation:
+
+A pulse train with a pulse rate of 50 Hz is created using rectangular pulses.
+
+3. Natural Sampling:
+
+The message signal is multiplied by the pulse train, producing the sampled waveform.
+
+4. Reconstruction Process:
+
+The sampled signal undergoes zero-order hold interpolation to reconstruct the original message.
+
+A low-pass Butterworth filter is applied for smooth reconstruction.
