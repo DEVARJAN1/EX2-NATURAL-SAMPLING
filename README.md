@@ -3,7 +3,7 @@
 
 To perform Natural Sampling of a continuous-time message signal using a pulse train and reconstruct the signal using a low-pass filter.
 
-Tools required :
+## Tools required :
 
 Python (Version 3.x)
 
