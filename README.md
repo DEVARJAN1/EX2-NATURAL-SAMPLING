@@ -1,5 +1,6 @@
 # Natural-Sampling
-
+DEVARAJAN
+212223060044
 ## AIM
 Write a simple Natural sampling program using Python.
 
