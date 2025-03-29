@@ -1,5 +1,5 @@
 # Natural-Sampling
-Aim :
+## Aim :
 
 To perform Natural Sampling of a continuous-time message signal using a pulse train and reconstruct the signal using a low-pass filter.
 
@@ -14,7 +14,7 @@ Matplotlib Library (for plotting the waveforms)
 Scipy Library (for signal processing, including filtering)
 
 
-Program :
+## Program :
 
 #Natural sampling
 
@@ -113,7 +113,7 @@ plt.show()
 
 
 
-Output Waveform :
+## Output Waveform :
 
 ![Screenshot 2025-03-24 132438](https://github.com/user-attachments/assets/09f2b66f-0c0f-464b-ba91-b603e95e63cc)
 
@@ -126,7 +126,7 @@ Output Waveform :
 
 
 
-Results :
+## Results :
 
 1. Original Message Signal:
 
